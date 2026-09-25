@@ -4,105 +4,1179 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Look to Lucky</title>
-  <meta name="description" content="Baixe o Look to Lucky para Windows." />
+  <meta name="description" content="Assista a vários canais da Kick ao mesmo tempo, ajude no chat e transforme o seu tempo de audiência em créditos. App para Windows." />
 
-  <!-- O .png é o que todo navegador atual usa na aba. O .ico existe só
-       para o pedido automático que alguns fazem a /favicon.ico. -->
   <link rel="icon" type="image/png" href="favicon.png" />
   <link rel="icon" type="image/x-icon" href="favicon.ico" />
   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
 
   <meta property="og:title" content="Look to Lucky" />
-  <meta property="og:description" content="Baixe o Look to Lucky para Windows." />
+  <meta property="og:description" content="Assista a vários canais da Kick ao mesmo tempo e transforme o seu tempo de audiência em créditos." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://looktolucky.com.br" />
   <meta property="og:image" content="https://looktolucky.com.br/favicon.png" />
-  <meta name="theme-color" content="#0c0f14" />
+  <meta name="theme-color" content="#08090c" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700;800&display=swap"
     rel="stylesheet" />
 
   <style>
     :root {
-      --bg-void: #0c0f14;
-      --text-primary: #e7e9ed;
+      --bg: #08090c;
+      --bg-2: #0b0d12;
+      --panel: #11141b;
+      --raised: #171b24;
+      --line: #21252e;
+      --line-soft: #191d25;
+
+      --text: #eceef2;
+      --dim: #8b93a3;
+      --muted: #59616f;
+
       --accent: #ff2be5;
       --accent-2: #9146ff;
+      --grad: linear-gradient(95deg, #ff2be5, #9146ff);
+
+      --mono: "JetBrains Mono", ui-monospace, "SF Mono", monospace;
+      --sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+
+      --max: 1180px;
+      --gutter: 24px;
+      --nav-h: 68px;
     }
 
     * { box-sizing: border-box; }
 
-    html, body { height: 100%; }
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: calc(var(--nav-h) + 16px);
+    }
 
     body {
       margin: 0;
-      background: var(--bg-void);
-      background-image:
-        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255, 43, 229, 0.12), transparent),
-        radial-gradient(ellipse 60% 50% at 100% 0%, rgba(145, 70, 255, 0.10), transparent);
-      color: var(--text-primary);
-      font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
       -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
 
-      display: flex;
-      flex-direction: column;
+    a { color: inherit; }
+
+    .wrap {
+      width: 100%;
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 var(--gutter);
+    }
+
+    /* ---------- tipografia compartilhada ---------- */
+
+    .eyebrow {
+      display: inline-flex;
       align-items: center;
-      justify-content: center;
-      gap: 34px;
-      padding: 40px 20px;
-      text-align: center;
+      gap: 9px;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--dim);
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 10px var(--accent);
+      flex: none;
+    }
+
+    .sec-label {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 0 0 22px;
+    }
+
+    .sec-label span { color: var(--muted); }
+
+    h2 {
+      font-size: clamp(1.75rem, 4.4vw, 2.9rem);
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -0.035em;
+      margin: 0;
+    }
+
+    .sec-head {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 24px 60px;
+      align-items: end;
+      margin-bottom: 44px;
+    }
+
+    .sec-head p {
+      margin: 0;
+      color: var(--dim);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    section { padding: 92px 0; }
+
+    .alt { background: var(--bg-2); border-block: 1px solid var(--line-soft); }
+
+    /* ---------- barra de navegação ---------- */
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 60;
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      background: rgba(8, 9, 12, 0.82);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--line-soft);
+    }
+
+    nav .wrap {
+      display: flex;
+      align-items: center;
+      gap: 20px;
     }
 
     .brand {
       display: flex;
       align-items: center;
-      gap: 12px;
-      font-family: "JetBrains Mono", ui-monospace, monospace;
+      gap: 9px;
+      font-family: var(--mono);
       font-weight: 700;
-      font-size: clamp(1.2rem, 4.6vw, 1.7rem);
+      font-size: 0.98rem;
       letter-spacing: -0.02em;
+      text-decoration: none;
+      flex: none;
     }
 
-    .mark {
-      width: 14px;
-      height: 14px;
-      border-radius: 4px;
-      background: var(--accent);
-      box-shadow: 0 0 18px rgba(255, 43, 229, 0.65);
+    .brand img {
+      width: 26px;
+      height: 26px;
+      display: block;
     }
 
-    .download {
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      margin: 0 auto;
+    }
+
+    .nav-links a {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--dim);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    /* ---------- botões ---------- */
+
+    .btn {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
-      max-width: 100%;
-      background: linear-gradient(90deg, var(--accent), var(--accent-2));
-      color: #12000f;
-      font-weight: 700;
-      font-size: clamp(1rem, 3.6vw, 1.1rem);
+      justify-content: center;
+      gap: 9px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 600;
       text-decoration: none;
-      padding: 16px 38px;
-      border-radius: 10px;
-      box-shadow: 0 10px 30px rgba(255, 43, 229, 0.3);
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      white-space: nowrap;
+      padding: 12px 22px;
+      border-radius: 9px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, border-color 0.15s ease;
     }
 
-    .download:hover {
+    .btn-primary {
+      background: var(--grad);
+      color: #150011;
+      box-shadow: 0 8px 26px rgba(255, 43, 229, 0.26);
+    }
+
+    .btn-primary:hover {
       transform: translateY(-2px);
-      box-shadow: 0 14px 38px rgba(255, 43, 229, 0.42);
+      box-shadow: 0 12px 32px rgba(255, 43, 229, 0.36);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text);
+      border-color: var(--line);
+    }
+
+    .btn-ghost:hover { border-color: #39404d; background: rgba(255, 255, 255, 0.03); }
+
+    .btn-lg { padding: 15px 30px; font-size: 1rem; }
+
+    /* ---------- herói ---------- */
+
+    .hero {
+      position: relative;
+      padding: 76px 0 84px;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: -200px 0 auto 0;
+      height: 620px;
+      background:
+        radial-gradient(ellipse 52% 60% at 22% 40%, rgba(255, 43, 229, 0.16), transparent 70%),
+        radial-gradient(ellipse 46% 56% at 82% 22%, rgba(145, 70, 255, 0.16), transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero .wrap {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 56px;
+      align-items: center;
+    }
+
+    .kicker {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 26px 0 18px;
+    }
+
+    .kicker b { color: var(--accent); font-weight: 500; }
+
+    h1 {
+      font-size: clamp(2.3rem, 5.6vw, 4rem);
+      font-weight: 800;
+      line-height: 1.02;
+      letter-spacing: -0.045em;
+      margin: 0 0 22px;
+    }
+
+    h1 em {
+      font-style: normal;
+      background: var(--grad);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero p.lede {
+      margin: 0 0 30px;
+      max-width: 44ch;
+      color: var(--dim);
+      font-size: 1.02rem;
+      line-height: 1.7;
+    }
+
+    .cta-row { display: flex; flex-wrap: wrap; gap: 12px; }
+
+    .os-note {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 20px 0 0;
+      font-family: var(--mono);
+      font-size: 0.74rem;
+      color: var(--muted);
+    }
+
+    .hero-bullets {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 26px;
+      margin: 34px 0 0;
+      padding: 22px 0 0;
+      border-top: 1px solid var(--line-soft);
+      list-style: none;
+    }
+
+    .hero-bullets li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.82rem;
+      color: var(--dim);
+    }
+
+    .hero-bullets li::before {
+      content: "";
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex: none;
+    }
+
+    /* ---------- maquete do app ---------- */
+
+    .mock-shell { position: relative; }
+
+    .mock {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--panel);
+      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.55);
+      overflow: hidden;
+    }
+
+    .mock-bar {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 11px 14px;
+      border-bottom: 1px solid var(--line);
+      background: var(--raised);
+    }
+
+    .mock-bar .dot {
+      width: 9px; height: 9px; border-radius: 50%;
+      background: #2c323d; flex: none;
+    }
+
+    .mock-bar .title {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: var(--muted);
+      margin-left: 6px;
+    }
+
+    .mock-bar .credits {
+      margin-left: auto;
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: var(--accent);
+    }
+
+    .mock-body { display: flex; }
+
+    .mock-rail {
+      width: 52px;
+      flex: none;
+      padding: 12px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 9px;
+      border-right: 1px solid var(--line);
+      background: #0e1117;
+    }
+
+    .mock-rail i {
+      width: 26px; height: 26px;
+      border-radius: 7px;
+      background: #1c212b;
+      display: block;
+    }
+
+    .mock-rail i.on { background: rgba(255, 43, 229, 0.22); box-shadow: inset 0 0 0 1px rgba(255,43,229,0.4); }
+
+    .mock-grid {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      padding: 10px;
+    }
+
+    .tile {
+      position: relative;
+      border-radius: 8px;
+      border: 1px solid #1e232c;
+      min-height: 86px;
+      padding: 9px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      overflow: hidden;
+    }
+
+    .tile.big { grid-column: span 2; min-height: 128px; }
+
+    .tile::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 35%, rgba(0, 0, 0, 0.72));
+    }
+
+    .t1 { background: linear-gradient(140deg, #3a1350, #10131a); }
+    .t2 { background: linear-gradient(140deg, #0f3a44, #10131a); }
+    .t3 { background: linear-gradient(140deg, #3f1430, #10131a); }
+    .t4 { background: linear-gradient(140deg, #142f46, #10131a); }
+
+    .tile .name {
+      position: relative;
+      z-index: 1;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: #dfe3ea;
+    }
+
+    .tile .meta {
+      position: relative;
+      z-index: 1;
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      color: #97a0b0;
+      margin-top: 2px;
+    }
+
+    .live {
+      position: absolute;
+      top: 8px; left: 8px;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-family: var(--mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.1em;
+      color: #fff;
+      background: rgba(0, 0, 0, 0.55);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 4px;
+      padding: 2px 6px;
+    }
+
+    .live::before {
+      content: "";
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: #ff3b5c;
+      animation: pulse 1.8s ease-in-out infinite;
+    }
+
+    @keyframes pulse { 50% { opacity: 0.25; } }
+
+    /* fichas flutuantes sobre a maquete */
+    .chip {
+      position: absolute;
+      z-index: 3;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 10px 13px;
+      border-radius: 11px;
+      background: rgba(18, 21, 28, 0.9);
+      border: 1px solid var(--line);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow: 0 14px 34px rgba(0, 0, 0, 0.5);
+      animation: float 5s ease-in-out infinite;
+    }
+
+    .chip .v {
+      font-family: var(--mono);
+      font-size: 0.86rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .chip .k {
+      font-size: 0.68rem;
+      color: var(--dim);
+      line-height: 1.3;
+    }
+
+    .chip-a { top: -18px; right: -14px; }
+    .chip-b { bottom: -20px; left: -18px; animation-delay: -2.5s; }
+
+    @keyframes float {
+      50% { transform: translateY(-9px); }
+    }
+
+    /* ---------- faixa rolante ---------- */
+
+    .marquee {
+      background: var(--grad);
+      color: #150011;
+      padding: 13px 0;
+      overflow: hidden;
+      white-space: nowrap;
+      border-block: 1px solid rgba(0, 0, 0, 0.25);
+    }
+
+    .marquee-track {
+      display: inline-flex;
+      gap: 34px;
+      padding-right: 34px;
+      animation: slide 26s linear infinite;
+      will-change: transform;
+    }
+
+    .marquee b {
+      font-size: clamp(0.95rem, 2vw, 1.3rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+    }
+
+    .marquee span { opacity: 0.5; }
+
+    @keyframes slide { to { transform: translateX(-50%); } }
+
+    /* ---------- painel de vitrine ---------- */
+
+    .showcase {
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: 40px;
+      align-items: center;
+      padding: 34px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: linear-gradient(160deg, #10131a, #0b0d12);
+    }
+
+    .showcase h3 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      margin: 16px 0 10px;
+      line-height: 1.2;
+    }
+
+    .showcase p {
+      margin: 0 0 18px;
+      color: var(--dim);
+      font-size: 0.92rem;
+      line-height: 1.7;
+    }
+
+    .inline-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .inline-link:hover { text-decoration: underline; }
+
+    .glyph {
+      width: 36px; height: 36px;
+      border-radius: 9px;
+      display: grid;
+      place-items: center;
+      background: rgba(255, 43, 229, 0.12);
+      border: 1px solid rgba(255, 43, 229, 0.25);
+      font-size: 1.05rem;
+    }
+
+    /* ---------- grades de conteúdo ---------- */
+
+    .cols-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+      gap: 18px;
+      margin-top: 54px;
+      padding-top: 40px;
+      border-top: 1px solid var(--line-soft);
+    }
+
+    .col h4 {
+      margin: 14px 0 7px;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: -0.015em;
+    }
+
+    .col p {
+      margin: 0;
+      color: var(--dim);
+      font-size: 0.88rem;
+      line-height: 1.65;
+    }
+
+    /* passos numerados */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
+      gap: 2px;
+      background: var(--line-soft);
+      border: 1px solid var(--line-soft);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    .step {
+      padding: 30px 26px 34px;
+      background: var(--bg);
+    }
+
+    .alt .step { background: var(--bg-2); }
+
+    .step .n {
+      font-family: var(--mono);
+      font-size: 2.4rem;
+      font-weight: 700;
+      letter-spacing: -0.05em;
+      color: #2b303a;
+      line-height: 1;
+    }
+
+    .step h4 {
+      margin: 22px 0 8px;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: -0.015em;
+    }
+
+    .step p {
+      margin: 0;
+      color: var(--dim);
+      font-size: 0.88rem;
+      line-height: 1.65;
+    }
+
+    /* cartões da comunidade */
+    .cards {
+      display: grid;
+      /* 300px força 3 colunas na largura máxima (3×300 cabe, 4×300 não),
+         para os seis cartões fecharem 3+3 em vez de 4+2. */
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      padding: 26px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--panel);
+      transition: border-color 0.18s ease, transform 0.18s ease;
+    }
+
+    .card:hover { border-color: #343a46; transform: translateY(-3px); }
+
+    .card h4 {
+      margin: 16px 0 8px;
+      font-size: 1.02rem;
+      font-weight: 700;
+      letter-spacing: -0.015em;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--dim);
+      font-size: 0.88rem;
+      line-height: 1.65;
+    }
+
+    .card .tag {
+      display: inline-block;
+      margin-top: 14px;
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 4px 10px;
+    }
+
+    /* ---------- perguntas ---------- */
+
+    .faq { border-top: 1px solid var(--line-soft); }
+
+    details {
+      border-bottom: 1px solid var(--line-soft);
+    }
+
+    summary {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 22px 0;
+      cursor: pointer;
+      list-style: none;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: -0.015em;
+    }
+
+    summary::-webkit-details-marker { display: none; }
+
+    summary::after {
+      content: "+";
+      margin-left: auto;
+      font-family: var(--mono);
+      font-size: 1.2rem;
+      color: var(--accent);
+      transition: transform 0.2s ease;
+    }
+
+    details[open] summary::after { transform: rotate(45deg); }
+
+    details p {
+      margin: 0 0 24px;
+      max-width: 72ch;
+      color: var(--dim);
+      font-size: 0.92rem;
+      line-height: 1.75;
+    }
+
+    /* ---------- chamada final ---------- */
+
+    .final {
+      position: relative;
+      text-align: center;
+      padding: 96px 0 104px;
+      overflow: hidden;
+    }
+
+    .final::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 100% at 50% 100%, rgba(255, 43, 229, 0.14), transparent 70%);
+      pointer-events: none;
+    }
+
+    .final .wrap { position: relative; }
+
+    .final h2 { margin-bottom: 18px; }
+
+    .final p {
+      max-width: 46ch;
+      margin: 0 auto 32px;
+      color: var(--dim);
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+
+    .final .cta-row { justify-content: center; }
+
+    /* ---------- rodapé ---------- */
+
+    footer {
+      border-top: 1px solid var(--line-soft);
+      padding: 34px 0 44px;
+    }
+
+    footer .wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px 28px;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--mono);
+      font-size: 0.74rem;
+      color: var(--muted);
+    }
+
+    footer a { color: var(--dim); text-decoration: none; }
+    footer a:hover { color: var(--accent); }
+
+    /* ---------- aparição ao rolar ---------- */
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.in { opacity: 1; transform: none; }
+
+    /* ---------- telas menores ---------- */
+
+    @media (max-width: 980px) {
+      .hero .wrap, .sec-head, .showcase { grid-template-columns: 1fr; }
+      .sec-head { gap: 18px; align-items: start; }
+      .showcase { gap: 30px; padding: 26px; }
+      .nav-links { display: none; }
+      .hero { padding: 52px 0 64px; }
+      section { padding: 68px 0; }
+      .mock-shell { margin-inline: 4px; }
+      .chip-a { right: -4px; }
+      .chip-b { left: -4px; }
+    }
+
+    @media (max-width: 560px) {
+      .chip { display: none; }
+      .hero-bullets { gap: 10px 18px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .marquee-track, .chip, .live::before { animation: none; }
+      .reveal { opacity: 1; transform: none; transition: none; }
     }
   </style>
 </head>
 <body>
 
-  <span class="brand"><span class="mark" aria-hidden="true"></span> Look to Lucky</span>
+  <nav>
+    <div class="wrap">
+      <a class="brand" href="#topo">
+        <img src="favicon.png" alt="" />
+        Look to Lucky
+      </a>
+      <div class="nav-links">
+        <a href="#experiencia">A experiência</a>
+        <a href="#como-funciona">Como funciona</a>
+        <a href="#comunidade">Comunidade</a>
+        <a href="#perguntas">Perguntas</a>
+      </div>
+      <a class="btn btn-primary" href="https://github.com/guilhermedamasio/LookToLucky-releases/releases/latest/download/LookToLucky.zip">Baixar</a>
+    </div>
+  </nav>
 
-  <a class="download" href="https://github.com/guilhermedamasio/LookToLucky-releases/releases/latest/download/LookToLucky.zip">
-    ⭳ Baixar para Windows
-  </a>
+  <!-- ================= herói ================= -->
+  <header class="hero" id="topo">
+    <div class="wrap">
+      <div>
+        <span class="eyebrow">Assista junto. Cresça junto.</span>
+
+        <p class="kicker"><b>—— LOOK TO LUCKY</b> &nbsp;/&nbsp; KICK &nbsp;·&nbsp; 01</p>
+
+        <h1>O seu tempo assistindo<br /><em>vale alguma coisa.</em></h1>
+
+        <p class="lede">
+          Abra vários canais da Kick na mesma janela, apareça no chat de quem
+          está começando e acumule créditos enquanto assiste. Sem dez abas,
+          sem perder nada.
+        </p>
+
+        <div class="cta-row">
+          <a class="btn btn-primary btn-lg" href="https://github.com/guilhermedamasio/LookToLucky-releases/releases/latest/download/LookToLucky.zip">
+            ⭳ Baixar para Windows
+          </a>
+          <a class="btn btn-ghost btn-lg" href="#experiencia">Ver como funciona ↓</a>
+        </div>
+
+        <p class="os-note">▢ Windows 10/11 · 30 MB · entrada com código de convite</p>
+
+        <ul class="hero-bullets">
+          <li>Vários canais de uma vez</li>
+          <li>Créditos por hora</li>
+          <li>Impulso para a sua live</li>
+        </ul>
+      </div>
+
+      <div class="mock-shell">
+        <div class="chip chip-a">
+          <span class="v">+120</span>
+          <span class="k">créditos<br />nesta hora</span>
+        </div>
+
+        <div class="mock">
+          <div class="mock-bar">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            <span class="title">Look to Lucky — Ao vivo</span>
+            <span class="credits">◆ 4.280</span>
+          </div>
+          <div class="mock-body">
+            <div class="mock-rail">
+              <i class="on"></i><i></i><i></i><i></i><i></i><i></i>
+            </div>
+            <div class="mock-grid">
+              <div class="tile big t1">
+                <span class="live">AO VIVO</span>
+                <span class="name">canal em destaque</span>
+                <span class="meta">1.2 mil assistindo · Just Chatting</span>
+              </div>
+              <div class="tile t2">
+                <span class="live">AO VIVO</span>
+                <span class="name">parceiro</span>
+                <span class="meta">184 assistindo</span>
+              </div>
+              <div class="tile t3">
+                <span class="live">AO VIVO</span>
+                <span class="name">parceiro</span>
+                <span class="meta">67 assistindo</span>
+              </div>
+              <div class="tile t4">
+                <span class="live">AO VIVO</span>
+                <span class="name">parceiro</span>
+                <span class="meta">23 assistindo</span>
+              </div>
+              <div class="tile t1">
+                <span class="live">AO VIVO</span>
+                <span class="name">parceiro</span>
+                <span class="meta">9 assistindo</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="chip chip-b">
+          <span class="v">6</span>
+          <span class="k">canais parceiros<br />ao vivo agora</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= faixa ================= -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <b>Assista junto</b><span>✳</span><b>Ajude no chat</b><span>✳</span>
+      <b>Ganhe créditos</b><span>✳</span><b>Impulsione sua live</b><span>✳</span>
+      <b>Suba no ranking</b><span>✳</span>
+      <b>Assista junto</b><span>✳</span><b>Ajude no chat</b><span>✳</span>
+      <b>Ganhe créditos</b><span>✳</span><b>Impulsione sua live</b><span>✳</span>
+      <b>Suba no ranking</b><span>✳</span>
+    </div>
+  </div>
+
+  <!-- ================= 01 a experiência ================= -->
+  <section id="experiencia">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div>
+          <p class="sec-label">01 <span>/ A experiência</span></p>
+          <h2>Uma janela.<br />A comunidade inteira.</h2>
+        </div>
+        <p>
+          A grade mostra quem está ao vivo entre os canais parceiros, com um em
+          destaque e o resto em volta. Quem desligou some da lista sozinho, então
+          você nunca fica olhando para uma tela parada.
+        </p>
+      </div>
+
+      <div class="showcase reveal">
+        <div>
+          <span class="glyph">🖥️</span>
+          <h3>Assista a vários,<br />sem perder o foco.</h3>
+          <p>
+            Escolha os canais, deixe o app aberto e acompanhe todos ao mesmo
+            tempo. O áudio fica com quem você escolher, e trocar o destaque é
+            um clique.
+          </p>
+          <a class="inline-link" href="#como-funciona">Entenda como funciona ↗</a>
+        </div>
+
+        <div class="mock">
+          <div class="mock-bar">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            <span class="title">Canais parceiros</span>
+            <span class="credits">◆ ao vivo</span>
+          </div>
+          <div class="mock-grid" style="grid-template-columns: 1fr 1fr;">
+            <div class="tile t2"><span class="live">AO VIVO</span><span class="name">Games</span><span class="meta">a próxima partida</span></div>
+            <div class="tile t3"><span class="live">AO VIVO</span><span class="name">Just Chatting</span><span class="meta">um bom papo</span></div>
+            <div class="tile t1"><span class="live">AO VIVO</span><span class="name">Criatividade</span><span class="meta">uma ideia nova</span></div>
+            <div class="tile t4"><span class="name">A sua live aqui</span><span class="meta">entre com um convite</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cols-3 reveal">
+        <div class="col">
+          <span class="glyph">🪙</span>
+          <h4>Sua presença vira crédito.</h4>
+          <p>Cada hora com o app aberto rende créditos automaticamente. Eles acumulam e não expiram.</p>
+        </div>
+        <div class="col">
+          <span class="glyph">💬</span>
+          <h4>Ajude no chat sem sair daqui.</h4>
+          <p>Escreva no chat dos parceiros pelo próprio app e ganhe por isso — o dobro na primeira vez em cada canal.</p>
+        </div>
+        <div class="col">
+          <span class="glyph">⚡</span>
+          <h4>Coloque a sua live na vitrine.</h4>
+          <p>Gaste créditos em impulso e apareça em destaque na grade de todo mundo que estiver com o app aberto.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 02 como funciona ================= -->
+  <section class="alt" id="como-funciona">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div>
+          <p class="sec-label">02 <span>/ Como funciona</span></p>
+          <h2>Do download à<br />primeira hora contando.</h2>
+        </div>
+        <p>
+          Não tem instalador e não precisa instalar o .NET. Você extrai, entra
+          com o convite e autoriza a sua conta na própria Kick — uma vez só.
+        </p>
+      </div>
+
+      <div class="steps reveal">
+        <div class="step">
+          <div class="n">01</div>
+          <h4>Baixe e extraia</h4>
+          <p>Coloque a pasta onde quiser e abra o LookToLucky.exe. Nada é instalado no sistema.</p>
+        </div>
+        <div class="step">
+          <div class="n">02</div>
+          <h4>Entre com o convite</h4>
+          <p>Crie a conta com e-mail e senha e informe o código que você recebeu de alguém da comunidade.</p>
+        </div>
+        <div class="step">
+          <div class="n">03</div>
+          <h4>Autorize na Kick</h4>
+          <p>A autorização acontece na tela oficial da Kick e fica salva. O app nunca vê a sua senha.</p>
+        </div>
+        <div class="step">
+          <div class="n">04</div>
+          <h4>Deixe rodando</h4>
+          <p>Monte a grade com quem está ao vivo e os créditos entram sozinhos enquanto você assiste.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 03 comunidade ================= -->
+  <section id="comunidade">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div>
+          <p class="sec-label">03 <span>/ A comunidade</span></p>
+          <h2>Tem mais coisa<br />depois da primeira hora.</h2>
+        </div>
+        <p>
+          O crédito é só o começo. O que você faz com ele — e o quanto você
+          aparece — é o que move o resto do app.
+        </p>
+      </div>
+
+      <div class="cards reveal">
+        <div class="card">
+          <span class="glyph">🏆</span>
+          <h4>Ranking e Passe</h4>
+          <p>Suba nas disputas da comunidade e destrave recompensas conforme acumula horas assistidas.</p>
+          <span class="tag">Progressão</span>
+        </div>
+        <div class="card">
+          <span class="glyph">✅</span>
+          <h4>Tarefas e check-in</h4>
+          <p>Tarefas conferidas de verdade na Kick e um check-in diário com sequência, que rende molduras de perfil.</p>
+          <span class="tag">Todo dia</span>
+        </div>
+        <div class="card">
+          <span class="glyph">🛍️</span>
+          <h4>Loja e inventário</h4>
+          <p>Troque créditos por itens, guarde cupons e horas de impulso, e use quando fizer mais diferença.</p>
+          <span class="tag">Seus itens</span>
+        </div>
+        <div class="card">
+          <span class="glyph">🎰</span>
+          <h4>Cassino de créditos</h4>
+          <p>Caça-níquel, Crash rodando 24h, Mines e uma roleta de prêmios que gira a cada 24 horas assistidas.</p>
+          <span class="tag">Só com créditos</span>
+        </div>
+        <div class="card">
+          <span class="glyph">🤝</span>
+          <h4>Indicação</h4>
+          <p>Traga gente da sua comunidade com o seu código e acompanhe quem entrou por você.</p>
+          <span class="tag">Convites</span>
+        </div>
+        <div class="card">
+          <span class="glyph">🔔</span>
+          <h4>Eventos no chat</h4>
+          <p>De vez em quando aparece uma palavra para o pessoal levar ao chat de um canal ao mesmo tempo.</p>
+          <span class="tag">Ao vivo</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= perguntas ================= -->
+  <section class="alt" id="perguntas">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div>
+          <p class="sec-label">04 <span>/ Perguntas</span></p>
+          <h2>Antes de baixar.</h2>
+        </div>
+        <p>Se ficou faltando alguma coisa, é só escrever para o suporte.</p>
+      </div>
+
+      <div class="faq reveal">
+        <details>
+          <summary>Preciso de convite mesmo?</summary>
+          <p>Precisa. O app está em beta fechado, então a criação de conta pede um código de convite de alguém que já usa. Baixar sem o código não adianta — ele é pedido logo no cadastro.</p>
+        </details>
+        <details>
+          <summary>O app pega a minha senha da Kick?</summary>
+          <p>Não. A autorização acontece na tela oficial da Kick e o app recebe apenas uma permissão para escrever no chat em seu nome. Sua senha não passa por aqui em momento nenhum, e você pode revogar o acesso pela Kick quando quiser.</p>
+        </details>
+        <details>
+          <summary>O cassino usa dinheiro de verdade?</summary>
+          <p>Não. Todos os jogos usam apenas os créditos do app, que você acumula assistindo. Não há aposta com dinheiro nem saque em dinheiro.</p>
+        </details>
+        <details>
+          <summary>Funciona no Mac ou no Linux?</summary>
+          <p>Por enquanto só no Windows 10 e 11, em 64 bits. O app usa o WebView2, que já vem com o Windows.</p>
+        </details>
+        <details>
+          <summary>Preciso instalar alguma coisa?</summary>
+          <p>Não. É só extrair o .zip e abrir o executável. Não tem instalador e não é preciso instalar o .NET separadamente — já vai tudo junto.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= chamada final ================= -->
+  <section class="final">
+    <div class="wrap">
+      <span class="eyebrow">Beta fechado</span>
+      <h2 style="margin-top:18px">Pegue o seu convite<br />e abra a grade.</h2>
+      <p>Baixe agora e comece a acumular na primeira hora com o app aberto.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary btn-lg" href="https://github.com/guilhermedamasio/LookToLucky-releases/releases/latest/download/LookToLucky.zip">
+          ⭳ Baixar para Windows
+        </a>
+      </div>
+      <p class="os-note" style="justify-content:center;margin-top:20px">▢ Windows 10/11 · 30 MB</p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <span>Look to Lucky · De parceiros, para parceiros.</span>
+      <span><a href="mailto:suporte@looktolucky.com.br">suporte@looktolucky.com.br</a></span>
+    </div>
+  </footer>
+
+  <script>
+    // Aparição suave ao rolar. Se o navegador não tiver IntersectionObserver,
+    // tudo fica visível — o conteúdo nunca depende do script.
+    (function () {
+      var alvos = document.querySelectorAll('.reveal');
+      if (!('IntersectionObserver' in window)) {
+        alvos.forEach(function (el) { el.classList.add('in'); });
+        return;
+      }
+      var obs = new IntersectionObserver(function (entradas) {
+        entradas.forEach(function (e) {
+          if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); }
+        });
+      }, { rootMargin: '0px 0px -12% 0px' });
+      alvos.forEach(function (el) { obs.observe(el); });
+    })();
+  </script>
 
 </body>
 </html>
